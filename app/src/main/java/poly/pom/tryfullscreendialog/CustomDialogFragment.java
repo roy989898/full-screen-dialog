@@ -59,13 +59,10 @@ public class CustomDialogFragment extends DialogFragment {
      */
 
     public int getStatusBarHeight() {
-        Rect rectangle = new Rect();
-        Window window = getActivity().getWindow();
-        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
-        int statusBarHeight = rectangle.top;
-        int contentViewTop =
-                window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-        return contentViewTop - statusBarHeight;
+        int viewY = getArguments().getInt("y");
+        int actionBarHeight = getActionBarHeight();
+        int statusBarHeight = getStatusBarHeight();
+        return viewY-statusBarHeight;
     }
 
     public int getActionBarHeight() {

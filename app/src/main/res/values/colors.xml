@@ -3,6 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="dialogBackground">#56151515</color>
+    <color name="toturial_darcker">#56151515</color>
     <color name="transparent">#b2d61d1d</color>
 </resources>
