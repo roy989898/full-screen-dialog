@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         hibuttonClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Dialog","ButtonClick");
                 int[] location = new int[2];
                 hibuttonClick.getLocationInWindow(location);
                 Toast.makeText(MainActivity.this, "x:" + location[0] + " " + "y:" + location[1], Toast.LENGTH_SHORT).show();

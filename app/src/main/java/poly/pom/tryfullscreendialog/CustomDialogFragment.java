@@ -6,8 +6,10 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -17,11 +19,12 @@ import android.widget.LinearLayout;
  * Created by User on 12/10/2016.
  */
 
-public class CustomDialogFragment extends DialogFragment {
+public class CustomDialogFragment extends DialogFragment implements View.OnClickListener {
     private Bundle bundle;
     private LinearLayout upLayout;
     private LinearLayout downLayout;
     private LinearLayout pointerLayout;
+    private LinearLayout middleLayout;
 
     public static CustomDialogFragment newInstance(View aView) {
 
@@ -59,10 +62,13 @@ public class CustomDialogFragment extends DialogFragment {
      */
 
     public int getStatusBarHeight() {
-        int viewY = getArguments().getInt("y");
-        int actionBarHeight = getActionBarHeight();
-        int statusBarHeight = getStatusBarHeight();
-        return viewY-statusBarHeight;
+        Rect rectangle = new Rect();
+        Window window = getActivity().getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        int statusBarHeight = rectangle.top;
+        int contentViewTop =
+                window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        return contentViewTop - statusBarHeight;
     }
 
     public int getActionBarHeight() {
@@ -87,8 +93,18 @@ public class CustomDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.purchase_items, container, false);
         bundle = getArguments();
         upLayout = (LinearLayout) view.findViewById(R.id.layoutUp);
+        middleLayout = (LinearLayout) view.findViewById(R.id.layoutMiddle);
         downLayout = (LinearLayout) view.findViewById(R.id.layoutDown);
         pointerLayout = (LinearLayout) view.findViewById(R.id.layoutPointer);
+//        middleLayout.setOnClickListener(this);
+        middleLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.d("Dialog","Layout click");
+                return false;
+            }
+        });
+
         return view;
 
     }
@@ -106,5 +122,15 @@ public class CustomDialogFragment extends DialogFragment {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         return dialog;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id=v.getId();
+        switch (id){
+            case R.id.layoutMiddle:
+                Log.d("Dialog","Layout click");
+                break;
+        }
     }
 }
